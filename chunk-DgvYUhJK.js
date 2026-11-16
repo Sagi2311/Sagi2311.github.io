@@ -55,10 +55,10 @@ import{n as l,t as k}from"./chunk-DJVAsKa_.js";var Lf=`186`;var pm={LEFT:0,MIDDL
 #endif`,aomap_fragment:`#ifdef USE_AOMAP
 	float ambientOcclusion = ( texture2D( aoMap, vAoMapUv ).r - 1.0 ) * aoMapIntensity + 1.0;
 	reflectedLight.indirectDiffuse *= ambientOcclusion;
-	#if defined( USE_CLEARCOAT )
+	#if defined( USE_CLEARCOAT ) 
 		clearcoatSpecularIndirect *= ambientOcclusion;
 	#endif
-	#if defined( USE_SHEEN )
+	#if defined( USE_SHEEN ) 
 		sheenSpecularIndirect *= ambientOcclusion;
 	#endif
 	#if defined( USE_ENVMAP ) && defined( STANDARD )
@@ -213,7 +213,7 @@ vec3 BRDF_BlinnPhong( const in vec3 lightDir, const in vec3 viewDir, const in ve
 	#ifdef ALPHA_TO_COVERAGE
 		float distanceToPlane, distanceGradient;
 		float clipOpacity = 1.0;
-		#pragma unroll_loop_star
+		#pragma unroll_loop_start
 		for ( int i = 0; i < UNION_CLIPPING_PLANES; i ++ ) {
 			plane = clippingPlanes[ i ];
 			distanceToPlane = - dot( vClipPosition, plane.xyz ) + plane.w;
@@ -224,7 +224,7 @@ vec3 BRDF_BlinnPhong( const in vec3 lightDir, const in vec3 viewDir, const in ve
 		#pragma unroll_loop_end
 		#if UNION_CLIPPING_PLANES < NUM_CLIPPING_PLANES
 			float unionClipOpacity = 1.0;
-			#pragma unroll_loop_star
+			#pragma unroll_loop_start
 			for ( int i = UNION_CLIPPING_PLANES; i < NUM_CLIPPING_PLANES; i ++ ) {
 				plane = clippingPlanes[ i ];
 				distanceToPlane = - dot( vClipPosition, plane.xyz ) + plane.w;
@@ -237,7 +237,7 @@ vec3 BRDF_BlinnPhong( const in vec3 lightDir, const in vec3 viewDir, const in ve
 		diffuseColor.a *= clipOpacity;
 		if ( diffuseColor.a == 0.0 ) discard;
 	#else
-		#pragma unroll_loop_star
+		#pragma unroll_loop_start
 		for ( int i = 0; i < UNION_CLIPPING_PLANES; i ++ ) {
 			plane = clippingPlanes[ i ];
 			if ( dot( vClipPosition, plane.xyz ) > plane.w ) discard;
@@ -245,7 +245,7 @@ vec3 BRDF_BlinnPhong( const in vec3 lightDir, const in vec3 viewDir, const in ve
 		#pragma unroll_loop_end
 		#if UNION_CLIPPING_PLANES < NUM_CLIPPING_PLANES
 			bool clipped = true;
-			#pragma unroll_loop_star
+			#pragma unroll_loop_start
 			for ( int i = UNION_CLIPPING_PLANES; i < NUM_CLIPPING_PLANES; i ++ ) {
 				plane = clippingPlanes[ i ];
 				clipped = ( dot( vClipPosition, plane.xyz ) > plane.w ) && clipped;
@@ -673,7 +673,7 @@ void RE_Direct_Lambert( const in IncidentLight directLight, const in vec3 geomet
 void RE_IndirectDiffuse_Lambert( const in vec3 irradiance, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, const in LambertMaterial material, inout ReflectedLight reflectedLight ) {
 	reflectedLight.indirectDiffuse += irradiance * BRDF_Lambert( material.diffuseColor );
 }
-#define RE_Direct				RE_Direct_Lamber
+#define RE_Direct				RE_Direct_Lambert
 #define RE_IndirectDiffuse		RE_IndirectDiffuse_Lambert`,lights_pars_begin:`uniform bool receiveShadow;
 uniform vec3 ambientLightColor;
 #if defined( USE_LIGHT_PROBES )
@@ -1210,16 +1210,16 @@ void RE_Direct_Physical( const in IncidentLight directLight, const in vec3 geome
 		clearcoatSpecularDirect += ccIrradiance * BRDF_GGX_Clearcoat( directLight.direction, geometryViewDir, geometryClearcoatNormal, material );
 	#endif
 	#ifdef USE_SHEEN
-
+ 
  		sheenSpecularDirect += irradiance * BRDF_Sheen( directLight.direction, geometryViewDir, geometryNormal, material.sheenColor, material.sheenRoughness );
-
+ 
  		float sheenAlbedoV = IBLSheenBRDF( geometryNormal, geometryViewDir, material.sheenRoughness );
  		float sheenAlbedoL = IBLSheenBRDF( geometryNormal, directLight.direction, material.sheenRoughness );
-
+ 
  		float sheenEnergyComp = 1.0 - max3( material.sheenColor ) * max( sheenAlbedoV, sheenAlbedoL );
-
+ 
  		irradiance *= sheenEnergyComp;
-
+ 
  	#endif
 	vec3 specularBRDF = BRDF_GGX( directLight.direction, geometryViewDir, geometryNormal, material );
 	#ifdef USE_RETROREFLECTION
@@ -1334,7 +1334,7 @@ IncidentLight directLight;
 	#if defined( USE_SHADOWMAP ) && NUM_POINT_LIGHT_SHADOWS > 0
 	PointLightShadow pointLightShadow;
 	#endif
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_POINT_LIGHTS; i ++ ) {
 		pointLight = pointLights[ i ];
 		getPointLightInfo( pointLight, geometryPosition, directLight );
@@ -1354,7 +1354,7 @@ IncidentLight directLight;
 	#if defined( USE_SHADOWMAP ) && NUM_SPOT_LIGHT_SHADOWS > 0
 	SpotLightShadow spotLightShadow;
 	#endif
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_SPOT_LIGHTS; i ++ ) {
 		spotLight = spotLights[ i ];
 		getSpotLightInfo( spotLight, geometryPosition, directLight );
@@ -1385,7 +1385,7 @@ IncidentLight directLight;
 	#if defined( USE_SHADOWMAP ) && NUM_SUN_LIGHT_SHADOWS > 0
 	SunLightShadow sunLightShadow;
 	#endif
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_SUN_LIGHTS; i ++ ) {
 		sunLight = sunLights[ i ];
 		getSunLightInfo( sunLight, directLight );
@@ -1402,7 +1402,7 @@ IncidentLight directLight;
 	#if defined( USE_SHADOWMAP ) && NUM_DIR_LIGHT_SHADOWS > 0
 	DirectionalLightShadow directionalLightShadow;
 	#endif
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
 		directionalLight = directionalLights[ i ];
 		getDirectionalLightInfo( directionalLight, directLight );
@@ -1416,7 +1416,7 @@ IncidentLight directLight;
 #endif
 #if ( NUM_RECT_AREA_LIGHTS > 0 ) && defined( RE_Direct_RectArea )
 	RectAreaLight rectAreaLight;
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_RECT_AREA_LIGHTS; i ++ ) {
 		rectAreaLight = rectAreaLights[ i ];
 		RE_Direct_RectArea( rectAreaLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );
@@ -1430,7 +1430,7 @@ IncidentLight directLight;
 		irradiance += getLightProbeIrradiance( lightProbe, geometryNormal );
 	#endif
 	#if ( NUM_HEMI_LIGHTS > 0 )
-		#pragma unroll_loop_star
+		#pragma unroll_loop_start
 		for ( int i = 0; i < NUM_HEMI_LIGHTS; i ++ ) {
 			irradiance += getHemisphereLightIrradiance( hemisphereLights[ i ], geometryNormal );
 		}
@@ -2159,7 +2159,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 		vSunShadowWorldNormal = shadowWorldNormal;
 	#endif
 	#if NUM_DIR_LIGHT_SHADOWS > 0
-		#pragma unroll_loop_star
+		#pragma unroll_loop_start
 		for ( int i = 0; i < NUM_DIR_LIGHT_SHADOWS; i ++ ) {
 			shadowWorldPosition = worldPosition + vec4( shadowWorldNormal * directionalLightShadows[ i ].shadowNormalBias, 0 );
 			vDirectionalShadowCoord[ i ] = directionalShadowMatrix[ i ] * shadowWorldPosition;
@@ -2167,7 +2167,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 		#pragma unroll_loop_end
 	#endif
 	#if NUM_POINT_LIGHT_SHADOWS > 0
-		#pragma unroll_loop_star
+		#pragma unroll_loop_start
 		for ( int i = 0; i < NUM_POINT_LIGHT_SHADOWS; i ++ ) {
 			shadowWorldPosition = worldPosition + vec4( shadowWorldNormal * pointLightShadows[ i ].shadowNormalBias, 0 );
 			vPointShadowCoord[ i ] = pointShadowMatrix[ i ] * shadowWorldPosition;
@@ -2176,7 +2176,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 	#endif
 #endif
 #if NUM_SPOT_LIGHT_COORDS > 0
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_SPOT_LIGHT_COORDS; i ++ ) {
 		shadowWorldPosition = worldPosition;
 		#if ( defined( USE_SHADOWMAP ) && UNROLLED_LOOP_INDEX < NUM_SPOT_LIGHT_SHADOWS )
@@ -2190,7 +2190,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 	#ifdef USE_SHADOWMAP
 	#if NUM_SUN_LIGHT_SHADOWS > 0
 	SunLightShadow sunLight;
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_SUN_LIGHT_SHADOWS; i ++ ) {
 		sunLight = sunLightShadows[ i ];
 		shadow *= receiveShadow ? getSunShadow( sunShadowMap[ i ], sunLight, UNROLLED_LOOP_INDEX ) : 1.0;
@@ -2199,7 +2199,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 	#endif
 	#if NUM_DIR_LIGHT_SHADOWS > 0
 	DirectionalLightShadow directionalLight;
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_DIR_LIGHT_SHADOWS; i ++ ) {
 		directionalLight = directionalLightShadows[ i ];
 		shadow *= receiveShadow ? getShadow( directionalShadowMap[ i ], directionalLight.shadowMapSize, directionalLight.shadowIntensity, directionalLight.shadowBias, directionalLight.shadowRadius, vDirectionalShadowCoord[ i ] ) : 1.0;
@@ -2208,7 +2208,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 	#endif
 	#if NUM_SPOT_LIGHT_SHADOWS > 0
 	SpotLightShadow spotLight;
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_SPOT_LIGHT_SHADOWS; i ++ ) {
 		spotLight = spotLightShadows[ i ];
 		shadow *= receiveShadow ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowIntensity, spotLight.shadowBias, spotLight.shadowRadius, vSpotLightCoord[ i ] ) : 1.0;
@@ -2217,7 +2217,7 @@ gl_Position = projectionMatrix * mvPosition;`,dithering_fragment:`#ifdef DITHERI
 	#endif
 	#if NUM_POINT_LIGHT_SHADOWS > 0 && ( defined( SHADOWMAP_TYPE_PCF ) || defined( SHADOWMAP_TYPE_BASIC ) )
 	PointLightShadow pointLight;
-	#pragma unroll_loop_star
+	#pragma unroll_loop_start
 	for ( int i = 0; i < NUM_POINT_LIGHT_SHADOWS; i ++ ) {
 		pointLight = pointLightShadows[ i ];
 		shadow *= receiveShadow ? getPointShadow( pointShadowMap[ i ], pointLight.shadowMapSize, pointLight.shadowIntensity, pointLight.shadowBias, pointLight.shadowRadius, vPointShadowCoord[ i ], pointLight.shadowCameraNear, pointLight.shadowCameraFar ) : 1.0;
@@ -3572,9 +3572,9 @@ void main() {
 	#include <transmission_fragment>
 	vec3 outgoingLight = totalDiffuse + totalSpecular + totalEmissiveRadiance;
 	#ifdef USE_SHEEN
-
+ 
 		outgoingLight = outgoingLight + sheenSpecularDirect + sheenSpecularIndirect;
-
+ 
  	#endif
 	#ifdef USE_CLEARCOAT
 		float dotNVcc = saturate( dot( geometryClearcoatNormal, geometryViewDir ) );
