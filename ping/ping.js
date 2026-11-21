@@ -4,8 +4,8 @@ var k=`
     top: 0;
     left: 0;
     z-index: 40;
-    width: 70px;
-    height: 70px;
+    width: 64px;
+    height: 64px;
     pointer-events: none;
   }
   :host([hidden]) { display: none; }
@@ -33,7 +33,7 @@ var k=`
   :host([data-dragging]) .companion { cursor: grabbing; }
   .float, .visual, img, canvas { display: block; width: 100%; height: 100%; }
   .visual {
-    filter: drop-shadow(0 6px 7px #040a10aa);
+    filter: drop-shadow(0 4px 5px #040a1080);
     transform: rotate(var(--tilt, 0deg)) scale(var(--scale, 1));
     transition: transform 180ms cubic-bezier(.23,1,.32,1);
   }
@@ -42,7 +42,7 @@ var k=`
   .hide, .show {
     border: 0;
     background: var(--chrome-surface, #17222d);
-    border-radius: 9px;
+    border-radius: 18px;
     cursor: pointer;
   }
   .hide {
@@ -71,7 +71,7 @@ var k=`
     white-space: nowrap;
   }
   @media (max-width: 650px) {
-    :host { width: 62px; height: 62px; }
+    :host { width: 54px; height: 54px; }
   }
   @media (pointer: coarse) {
     .hide { opacity: 1; pointer-events: auto; }
