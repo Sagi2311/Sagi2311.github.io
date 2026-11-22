@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640">
+  <defs>
+    <linearGradient id="background" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#161e29"/>
+      <stop offset="1" stop-color="#101319"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#a2b9cf" stroke-opacity=".08"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="m4 2 4 4-4 4" fill="none" stroke="#f1bda2" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <path fill="url(#background)" d="M0 0h1120v640H0z"/>
+  <path fill="url(#grid)" d="M0 0h1120v640H0z"/>
+  <g font-family="Arial, sans-serif">
+    <text x="64" y="106" fill="#f1efe9" font-size="74" font-weight="700" letter-spacing="-4">GeoX RP</text>
+    <text x="67" y="145" fill="#aabed1" font-size="24">Community portal</text>
+    <text x="1056" y="97" fill="#f1bda2" font-size="17" text-anchor="end" letter-spacing="2">WORKFLOW DIAGRAM</text>
+    <path d="M64 186h992" stroke="#63829c" stroke-opacity=".55"/>
+    <text x="64" y="233" fill="#aabed1" font-size="20">Public portal</text>
+    <text x="808" y="233" fill="#f1bda2" font-size="20">Staff access</text>
+    <g fill="#212e3b" stroke="#63829c">
+      <rect x="64" y="266" width="308" height="76" rx="9"/>
+      <rect x="64" y="360" width="308" height="76" rx="9"/>
+      <rect x="64" y="454" width="308" height="76" rx="9"/>
+    </g>
+    <g fill="none" stroke="#a8d6d5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="103" cy="301" r="9"/>
+      <path d="m110 308 8 8m-23 67h23v16h-12l-8 7v-7h-3zm2 83h21v26H97zm5 8h11m-11 6h11"/>
+    </g>
+    <g fill="#edf1f3" font-size="25" font-weight="600">
+      <text x="140" y="313">Rule search</text>
+      <text x="140" y="407">Forum threads</text>
+      <text x="140" y="501">Applications</text>
+    </g>
+    <path d="M372 492h130" fill="none" stroke="#f1bda2" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="513" y="454" width="196" height="76" rx="9" fill="#2b282a" stroke="#947362"/>
+    <text x="611" y="486" fill="#f3d7c4" font-size="21" text-anchor="middle">
+      <tspan x="611">Server-side</tspan>
+      <tspan x="611" dy="25">role check</tspan>
+    </text>
+    <path d="M709 492h88" fill="none" stroke="#f1bda2" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="808" y="454" width="248" height="76" rx="9" fill="#2b282a" stroke="#947362"/>
+    <text x="932" y="501" fill="#f3d7c4" font-size="22" text-anchor="middle">Application review</text>
+    <path d="M782 265v163" stroke="#947362" stroke-dasharray="5 7" opacity=".65"/>
+    <path d="M64 567h992" stroke="#63829c" stroke-opacity=".55"/>
+    <text x="64" y="602" fill="#aabed1" font-size="18" letter-spacing="1.5">Next.js  /  NextAuth  /  Prisma  /  MySQL</text>
+  </g>
+</svg>
