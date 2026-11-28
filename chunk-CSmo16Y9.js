@@ -1,0 +1,1 @@
+var e={force:1,finish:0,energy:.55,pattern:0,flow:1,warp:0,particleMode:0,density:1,orbit:1,roughness:0,metalness:0,burst:0};export{e as t};
